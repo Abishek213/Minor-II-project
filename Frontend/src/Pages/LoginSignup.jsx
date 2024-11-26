@@ -1,10 +1,21 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 
 const LoginSignup = () => {
   const [activeTab, setActiveTab] = useState("login");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data); // This will now log the form data
   };
 
   return (
@@ -57,7 +68,7 @@ const LoginSignup = () => {
 
           {/* Login Form */}
           {activeTab === "login" && (
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium">
                   Email
@@ -66,9 +77,9 @@ const LoginSignup = () => {
                   id="email"
                   type="email"
                   className="input input-bordered w-full"
-                  placeholder="Enter your email"
-                  required
+                  placeholder="Enter your email"  {...register("email", { required: true })}
                 />
+                 {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
               </div>
               <div>
                 <label htmlFor="password" className="block text-sm font-medium">
@@ -79,8 +90,10 @@ const LoginSignup = () => {
                   type="password"
                   className="input input-bordered w-full"
                   placeholder="Enter your password"
-                  required
+                  {...register("password", { required: true })}
+                  
                 />
+                 {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
               </div>
               <button className="btn btn-primary w-full">Login</button>
             </form>
@@ -88,31 +101,33 @@ const LoginSignup = () => {
 
           {/* Sign Up Form */}
           {activeTab === "signup" && (
-            <form className="space-y-4">
+            <form  onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label htmlFor="full-name" className="block text-sm font-medium">
-                  Full name
+                  Fullname
                 </label>
                 <input
-                  id="full-name"
+                  id="fullname"
                   type="text"
                   className="input input-bordered w-full"
                   placeholder="Enter your full name"
-                  required
+                  {...register("fullname", { required: true })}
                 />
+                 {errors.fullname && <p className="text-red-500 text-sm">FullName is required</p>}
               </div>
               <div>
                 <label htmlFor="signup-email" className="block text-sm font-medium">
                   Email
                 </label>
                 <input
-                  id="signup-email"
+                  id="signupemail"
                   type="email"
                   className="input input-bordered w-full"
                   placeholder="Enter your email"
-                  required
+                  {...register("signupemail", { required: true })}
                 />
-              </div>
+
+                {errors.signupemail && <p className="text-red-500 text-sm">Email is required</p>}              </div>
               <div>
                 <label htmlFor="contact" className="block text-sm font-medium">
                   Contact Number
@@ -122,32 +137,38 @@ const LoginSignup = () => {
                   type="text"
                   className="input input-bordered w-full"
                   placeholder="Enter your contact number"
-                  required
+                  {...register("contact", { required: true })}
                 />
+                 {errors.contact && <p className="text-red-500 text-sm">Contact is required</p>}
               </div>
               <div>
                 <label htmlFor="password-signup" className="block text-sm font-medium">
                   Password
                 </label>
                 <input
-                  id="password-signup"
+                  id="passwordsignup"
                   type="password"
                   className="input input-bordered w-full"
                   placeholder="Create a password"
-                  required
+                  {...register("passwordsignup", { required: true })}
                 />
+                 {errors.passwordsignup && <p className="text-red-500 text-sm">password is required</p>}
+
               </div>
               <div>
                 <label htmlFor="confirm-password" className="block text-sm font-medium">
                   Confirm Password
                 </label>
                 <input
-                  id="confirm-password"
+                  id="confirmpassword"
                   type="password"
                   className="input input-bordered w-full"
                   placeholder="Confirm your password"
-                  required
+                  {...register("confirmpassword", { required: true })}
+                  
                 />
+                 {errors.confirmpassword && <p className="text-red-500 text-sm">password is required</p>}
+
               </div>
               <button className="btn btn-primary w-full">Sign Up</button>
             </form>
@@ -155,54 +176,67 @@ const LoginSignup = () => {
 
           {/* Guest Check-In Form */}
           {activeTab === "guest" && (
-            <form className="space-y-4">
+            <form  onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label htmlFor="guest-name" className="block text-sm font-medium">
                   Full Name
                 </label>
                 <input
-                  id="guest-name"
+                  id="guestname"
                   type="text"
                   className="input input-bordered w-full"
                   placeholder="Enter your full name"
-                  required
+                  {...register("guestname", { required: true })}
+                  
                 />
+                 {errors.guestname && <p className="text-red-500 text-sm">GuestName is required</p>}
+
+
               </div>
               <div>
                 <label htmlFor="guest-contact" className="block text-sm font-medium">
                   Contact Number
                 </label>
                 <input
-                  id="guest-contact"
+                  id="guestcontact"
                   type="text"
                   className="input input-bordered w-full"
                   placeholder="Enter your contact number"
-                  required
+                  {...register("guestcontact", { required: true })}
+                  
                 />
+                 {errors.guestcontact && <p className="text-red-500 text-sm">GuestContact is required</p>}
+
               </div>
               <div>
                 <label htmlFor="guest-address" className="block text-sm font-medium">
                   Address
                 </label>
                 <input
-                  id="guest-address"
+                  id="guestaddress"
                   type="text"
                   className="input input-bordered w-full"
                   placeholder="Enter your address"
-                  required
+                  {...register("guestaddress", { required: true })}
+                  
                 />
+                 {errors.guestaddress && <p className="text-red-500 text-sm">Guestaddress is required</p>}
+
               </div>
               <div>
                 <label htmlFor="guest-email" className="block text-sm font-medium">
                   Email
                 </label>
                 <input
-                  id="guest-email"
+                  id="guestemail"
                   type="email"
                   className="input input-bordered w-full"
                   placeholder="Enter your email"
-                  required
+                  {...register("guestemail", { required: true })}
+                  
                 />
+                 {errors.guestemail && <p className="text-red-500 text-sm">GuestEmail is required</p>}
+
               </div>
               <button className="btn btn-primary w-full">Check-In as Guest</button>
             </form>
