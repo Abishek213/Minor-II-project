@@ -3,6 +3,7 @@ import axios from "axios";
 // import toast from 'react-hot-toast';
 // import { Toaster } from 'react-hot-toast';// import Login from "./components/Login.jsx";
 
+
 const Signup = () => {
   const {
     register,
@@ -19,10 +20,14 @@ const Signup = () => {
     await axios.post("http://localhost:4001/user/signup", userInfo)
       .then((res) => {
         console.log(res.data);
-        if (res.data) {
-          alert('Signup successfully');
+        if (res.data && res.data.token) {
+          const token = res.data.token;
 
-          localStorage.setItem("Users", JSON.stringify(res.data.user));
+          localStorage.setItem("token", token);
+          alert('Signup successfully');
+          // localStorage.setItem("Users", JSON.stringify(res.data.user));
+
+
 
         }
 

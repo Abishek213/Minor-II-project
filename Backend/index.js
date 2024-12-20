@@ -2,6 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+// require('dotenv').config();
+
+import jwt from"jsonwebtoken";
 
 // import User from "./model/user.schema.js";
 import userRoute from"./route/user.route.js";
@@ -13,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
+const JWT_SECRET = process.env.JWT_SECRET;
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 

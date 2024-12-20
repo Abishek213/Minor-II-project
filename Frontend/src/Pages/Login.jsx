@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -10,25 +11,34 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const UserInfo={
-      email:data.email,
-      password:data.password,
+    const UserInfo = {
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:4001/user/login", UserInfo);
+
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+        // Redirect based on role after login
+        if (response.data.user.role === 'Admin') {
+          navigate('/admindb');
+        } else if (response.data.user.role === 'Organizer') {
+          navigate('/orgdb');
+        } else {
+          navigate('/'); // General user page
+        }
+      } else {
+        alert("Login successful, but no token received.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Error: " + error.response.data.message);
     }
-    await axios.post("http://localhost:4001/user/login",UserInfo)
-    .then((response)=>{
-      console.log(response.data);
-      if(response.data){
-        alert("Logged in successfully!");
-      }
-    })
-    .catch((error)=>{
-      if(error.response){
-        console.log(error);
-        alert("Error: " + error.response.data.message);
-      }
-    })
-   
-    // Perform login logic here, such as sending data to an API
   };
 
   return (
